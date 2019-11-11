@@ -4,45 +4,28 @@ def out_file(solution, solution2):
 	archivo = open("output.txt", "w")
 	frase = "Solucion al problema 1 obtenida correctamente.\n"
 	archivo.write(frase)
-	frase = "La asigancion obtenida para cada hora de clase es:\n"
+	frase = "\nLa asigancion obtenida para cada hora de clase es:\n"
 	archivo.write(frase)
-	frase = "L1 ---> " + solution.get("L1") + "\n"
+	frase = "\nLUNES     MARTES     MIERCOLES     JUEVES\n"
 	archivo.write(frase)
-	frase = "L2 ---> " + solution.get("L2") + "\n"
+	frase = "----------------------------------------------------------------------\n"
 	archivo.write(frase)
-	frase = "L3 ---> " + solution.get("L3") + "\n"
+	frase = solution.get("L1") + "          " + solution.get("M1") +  "             " + solution.get("X1") + "             " + solution.get("J1") + "\n"
 	archivo.write(frase)
-	frase = "M1 ---> " + solution.get("M1") + "\n"
+	frase = solution.get("L2") + "          " + solution.get("M2") +  "             " + solution.get("X2") + "             " + solution.get("J2") + "\n"
 	archivo.write(frase)
-	frase = "M2 ---> " + solution.get("M2") + "\n"
+	frase = solution.get("L3") + "          " + solution.get("M3") +  "             " + solution.get("X3") + "\n"
 	archivo.write(frase)
-	frase = "M3 ---> " + solution.get("M3") + "\n"
+
+	frase = "----------------------------------------------------------------------\n"
 	archivo.write(frase)
-	frase = "X1 ---> " + solution.get("X1") + "\n"
+	frase = "Solucion al problema 2 obtenida correctamente.\n\nLa asignacion de un profesor para cada asignatura es:\n"
 	archivo.write(frase)
-	frase = "X2 ---> " + solution.get("X2") + "\n"
+	frase = "\nNATURALES     SOCIALES     MATEMATICAS     LENGUA     INGLES     E.FISICA\n"
 	archivo.write(frase)
-	frase = "X3 ---> " + solution.get("X3") + "\n"
+	frase = "-------------------------------------------------------------------------\n"
 	archivo.write(frase)
-	frase = "J1 ---> " + solution.get("J1") + "\n"
-	archivo.write(frase)
-	frase = "J2 ---> " + solution.get("J2") + "\n"
-	archivo.write(frase)
-	frase = "----------------------------------------------------------------------------------------\n"
-	archivo.write(frase)
-	frase = "Solucion al problema 2 obtenida correctamente.\nLa asignacion de un profesor para cada asignatura es:\n"
-	archivo.write(frase)
-	frase = "N ---> " + solution2.get("N") + "\n"
-	archivo.write(frase)
-	frase = "S ---> " + solution2.get("S") + "\n"
-	archivo.write(frase)
-	frase = "L ---> " + solution2.get("L") + "\n"
-	archivo.write(frase)
-	frase = "M ---> " + solution2.get("M") + "\n"
-	archivo.write(frase)
-	frase = "I ---> " + solution2.get("I") + "\n"
-	archivo.write(frase)
-	frase = "F ---> " + solution2.get("F") + "\n"
+	frase = solution2.get("N") + "             " + solution2.get("S") + "             " + solution2.get("M") +  "              " + solution2.get("L") + "              " + solution2.get("I")+ "              " + solution2.get("F") + "\n"
 	archivo.write(frase)
 	archivo.close()
 
@@ -130,7 +113,7 @@ def socialesLastHours(*args):
 	if haySociales == 0:
 		return True
 def naturalesSameDay(*args):
-	hayNaturales = 0
+	"""hayNaturales = 0
 	contadorNaturales = 0
 	for i in args:
 		if i == 'N':
@@ -142,7 +125,23 @@ def naturalesSameDay(*args):
 		if contadorNaturales == 2:
 			return True
 	else:
+		return True"""
+	true = 0
+	hayNaturales = 0
+	for i in args:
+		if i == 'N':
+			hayNaturales = 1
+	if hayNaturales == 1:
+		for i in range(len(args)):
+			if args[i] == 'N' and ((i + 1) < len(args)):
+				if args[i+1] == 'N':
+					true = 1
+		if true == 1:
+			return True
+	else:
 		return True
+
+
 problem = Problem()
 # Variables para el primer problema
 problem.addVariables(["L1", "L2", "L3","M1","M2","M3","X1","X2","X3","J1","J2"], ['N','S','L','M','I','F'])
