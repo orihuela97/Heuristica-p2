@@ -4,7 +4,7 @@ def out_file(solution, solution2):
 	archivo = open("output.txt", "w")
 	frase = "Solucion al problema 1 obtenida correctamente.\n"
 	archivo.write(frase)
-	frase = "\nLa asigancion obtenida para cada hora de clase es:\n"
+	frase = "\nLa asignacion obtenida para cada hora de clase es:\n"
 	archivo.write(frase)
 	frase = "\nLUNES     MARTES     MIERCOLES     JUEVES\n"
 	archivo.write(frase)
