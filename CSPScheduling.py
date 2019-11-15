@@ -1,6 +1,5 @@
 from constraint import *
-
-def out_file(solution, solution2):
+def out_file2(solution):
 	archivo = open("output.txt", "w")
 	frase = "Solucion al problema 1 obtenida correctamente.\n"
 	archivo.write(frase)
@@ -16,7 +15,6 @@ def out_file(solution, solution2):
 	archivo.write(frase)
 	frase = solution.get("L3") + "          " + solution.get("M3") +  "             " + solution.get("X3") + "\n"
 	archivo.write(frase)
-
 	frase = "----------------------------------------------------------------------\n"
 	archivo.write(frase)
 	frase = "Solucion al problema 2 obtenida correctamente.\n\nLa asignacion de un profesor para cada asignatura es:\n"
@@ -25,17 +23,15 @@ def out_file(solution, solution2):
 	archivo.write(frase)
 	frase = "-------------------------------------------------------------------------\n"
 	archivo.write(frase)
-	frase = solution2.get("N") + "             " + solution2.get("S") + "             " + solution2.get("M") +  "              " + solution2.get("L") + "              " + solution2.get("I")+ "              " + solution2.get("F") + "\n"
+	frase = solution.get("N") + "             " + solution.get("S") + "             " + solution.get("M") +  "              " + solution.get("L") + "              " + solution.get("I")+ "              " + solution.get("F") + "\n"
 	archivo.write(frase)
 	archivo.close()
+
 
 def two_perTeacher(*args):
 	juan = 0
 	andrea = 0
 	lucia = 0
-	juanList = []
-	andreaList = []
-	luciaList = []
 	for i in args:
 		if i == 'J':
 			juan += 1
@@ -46,19 +42,22 @@ def two_perTeacher(*args):
 	if juan == 2 and andrea == 2 and lucia == 2:
 		return True
 
+
 def lucia_Sociales(*args):
 	if args[0] == 'L':
 		if args [1] == 'A':
 			return True
 	else:
 		return True
-def juan_NaturalesSociales(*args):
-	acepta = 0
+
+
+def juan_primera(*args):
 	if args[0] == 'J':
-		if args[1] != 'N' and args[2] != 'N':
-			acepta = 1
-	if acepta == 1:
-		return True
+		if args[1] == 'N' or args[1] == 'S' or args[2] == 'N' or args[2] == 'S':
+			return False
+	return True
+
+
 def totalHours(*args):
 	contadorNaturales = 0
 	contadorSociales = 0
@@ -81,6 +80,8 @@ def totalHours(*args):
 			contadorEfisica += 1
 	if contadorNaturales == 2 and contadorSociales == 2 and contadorLengua == 2 and contadorMatematicas == 2 and contadorIngles == 2 and contadorEfisica == 1:
 		return True
+
+
 def Math_NatIngles(*args):
 	hayMates = 0
 	hayNaturales = 0
@@ -98,6 +99,7 @@ def Math_NatIngles(*args):
 			return True
 	else:
 	 return True
+
 def MathFirstHours(*args):
 	hayMates = 0
 	for i in args:
@@ -105,6 +107,7 @@ def MathFirstHours(*args):
 			hayMates = 1
 	if hayMates == 0:
 		return True
+
 def socialesLastHours(*args):
 	haySociales = 0
 	for i in args:
@@ -112,20 +115,9 @@ def socialesLastHours(*args):
 			haySociales = 1
 	if haySociales == 0:
 		return True
+
+
 def naturalesSameDay(*args):
-	"""hayNaturales = 0
-	contadorNaturales = 0
-	for i in args:
-		if i == 'N':
-			hayNaturales = 1
-	if hayNaturales == 1:
-		for i in args:
-			if i == 'N':
-				contadorNaturales += 1
-		if contadorNaturales == 2:
-			return True
-	else:
-		return True"""
 	true = 0
 	hayNaturales = 0
 	for i in args:
@@ -140,11 +132,10 @@ def naturalesSameDay(*args):
 			return True
 	else:
 		return True
-
-
 problem = Problem()
 # Variables para el primer problema
 problem.addVariables(["L1", "L2", "L3","M1","M2","M3","X1","X2","X3","J1","J2"], ['N','S','L','M','I','F'])
+problem.addVariables(['N','S','L','M','I','F'],['J', 'A', 'L'])
 # Restricciones para el problema 1
 problem.addConstraint(naturalesSameDay, ('L1', 'L2', 'L3'))
 problem.addConstraint(naturalesSameDay, ('M1', 'M2', 'M3'))
@@ -157,14 +148,12 @@ problem.addConstraint(Math_NatIngles, ('M1', 'M2', 'M3'))
 problem.addConstraint(Math_NatIngles, ('X1', 'X2', 'X3'))
 problem.addConstraint(Math_NatIngles, ('J1', 'J2'))
 problem.addConstraint(totalHours, ('L1', 'L2', 'L3','M1','M2','M3','X1','X2','X3','J1','J2'))
+problem.addConstraint(juan_primera, ('N', 'L1', "J1"))
+problem.addConstraint(juan_primera, ('S', 'L1', "J1"))
+problem.addConstraint(lucia_Sociales, ('S', 'F'))
+problem.addConstraint(two_perTeacher, ('N','S','L','M','I','F'))
 #sSolucion al problema 1
 solution = problem.getSolution()
-#-------------------------------------------------------------------------PROBLEMA2-----------------------------
-problem2 = Problem()
-problem2.addVariables(['N','S','L','M','I','F'],['J', 'A', 'L'])
-problem2.addConstraint(juan_NaturalesSociales, ('N', solution.get("L1"), solution.get("J1")))
-problem2.addConstraint(lucia_Sociales, ('S', 'F'))
-problem2.addConstraint(two_perTeacher, ('N','S','L','M','I','F'))
-solution2 = problem2.getSolution()
 #------------------------------------------------SALIDA A UN ARCHIVO DE TEXTO--------------------------------
-out_file(solution, solution2)
+#out_file(solution, solution2)
+out_file2(solution)

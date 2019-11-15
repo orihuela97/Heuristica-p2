@@ -1,17 +1,6 @@
 Solucion al problema 1 obtenida correctamente.
 
-La asigancion obtenida para cada hora de clase es:
+La asignacion obtenida para cada hora de clase es:
 
 LUNES     MARTES     MIERCOLES     JUEVES
 ----------------------------------------------------------------------
-M          I             M             N
-F          I             L             N
-L          S             S
-----------------------------------------------------------------------
-Solucion al problema 2 obtenida correctamente.
-
-La asignacion de un profesor para cada asignatura es:
-
-NATURALES     SOCIALES     MATEMATICAS     LENGUA     INGLES     E.FISICA
--------------------------------------------------------------------------
-J             A             L              J              A              L
