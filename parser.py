@@ -43,7 +43,7 @@ def leerAlumnos(lista):
     alumnos = []
     for i in lista:
 
-        print(i)
+
         j = 0
         puntero = i[j]
         numParada = ""
@@ -53,13 +53,13 @@ def leerAlumnos(lista):
             j += 1
             puntero = i[j]
         numParada = int(numParada)
-        print(numParada)
+
         x = i.split(":")
         x.pop(0)
         x = x[0].split(",")
         paradaActual = 0
         for z in x:
-            print(z)
+
             z = z.split("C")
             numAlumnos = int(z[0])
             numColegio = int(z[1])
@@ -67,8 +67,7 @@ def leerAlumnos(lista):
                 diccionario_aux = dict(Colegio = numColegio, ParadaOrigen = numParada)
                 alumnos.append(diccionario_aux)
         paradaActual += 1
-
-    print(alumnos)
+    return alumnos
 
 
 
@@ -78,6 +77,7 @@ def leerAlumnos(lista):
 
 
 def reader(fichero):
+    arguments = []
     f = open(fichero)
     x = f.read()
     x= x.split("\n")
@@ -89,10 +89,9 @@ def reader(fichero):
     y = x.pop(len(x)-3)
     #COLEGIOS ES UNA LISTA DE DICCIONARIOS, CADA DICCIONARIO TIENE: {IDCOLEGIO,NUMPARADA}
     colegios = leeColegios(y)
-
+    
     y = x.pop(len(x)-2)
     alumnos = leerAlumnos(y)
-
 
     y = x.pop(0)
     y = y.split(" ")
@@ -123,22 +122,8 @@ def reader(fichero):
         costMatrix.append(aux2)
 
 
-
-    print(costMatrix)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-reader("input.txt")
+    arguments.append(bus)
+    arguments.append(colegios)
+    arguments.append(alumnos)
+    arguments.append(costMatrix)
+    return arguments
