@@ -30,7 +30,7 @@ def leeColegios(lista):
             if j != "P" and j != " ":
                 aux1 += j
         parada = aux1
-        colegio = [idColegio,parada]
+        colegio = [int(idColegio),int(parada)]
         colegios.append(colegio)
 
     return colegios
