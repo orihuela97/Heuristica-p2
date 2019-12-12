@@ -11,17 +11,32 @@ def compararEstados(estado1,estado2): #devuelve True si son iguales
     pBus2=estado2[0]
     listAlumSub1=estado1[1].copy()
     listAlumSub2=estado2[1].copy()
-    listAlumPend1=estado1[2]
-    listAlumPend2=estado2[2]
+    listAlumPend1=estado1[2].copy()
+    listAlumPend2=estado2[2].copy()
     if(pBus1!=pBus2):
         return False
 
-    if listAlumSub1!=listAlumSub2:
+    encontrado = True
+    while len(listAlumSub1)>0 and encontrado:
+        alumno=listAlumSub1.pop(0)
+        encontrado=False
+        for i in range(len(listAlumSub2)):
+            if alumno==listAlumSub2[i]:
+                encontrado=True
+                listAlumSub2.pop(i)
+                break
+    if not encontrado:
         return False
-
-    if listAlumPend1!=listAlumPend2:
+    while len(listAlumPend1)>0 and encontrado:
+        alumno=listAlumPend1.pop(0)
+        encontrado=False
+        for i in range(len(listAlumPend2)):
+            if alumno==listAlumPend2[i]:
+                encontrado=True
+                listAlumPend2.pop(i)
+                break
+    if not encontrado or len(listAlumSub2)!=0 or len(listAlumPend2)!=0:
         return False
-
     return True
 
 
@@ -138,16 +153,7 @@ def operadores(nodo):
         if pBus==listaAlumnosPendientes[i][1]: # en 0 se encuntra la parda al colegio que va, y en 1 la parada del alumno
             auxListaAlumnosSubidos=nodo[1][1].copy()
             auxListaAlumnosPendientes=nodo[1][2].copy()
-            alumno=auxListaAlumnosPendientes.pop(i)
-            #insertar en orden en alumnosSubidosPara que luego sea menos complejo de comparar estados
-            if(len(auxListaAlumnosSubidos)==0):
-                auxListaAlumnosSubidos.append(alumno)
-            else:
-                for j in range(len(auxListaAlumnosSubidos)):
-                    if alumno[0]<=auxListaAlumnosSubidos[j][0]:
-                        if alumno[1]<=auxListaAlumnosSubidos[j][1]:
-                            auxListaAlumnosSubidos.insert(j,alumno)
-                            break
+            auxListaAlumnosSubidos.append(auxListaAlumnosPendientes.pop(i))
             estadoGenerado=[pBus,auxListaAlumnosSubidos,auxListaAlumnosPendientes]
             coste = nodo[2]+costeCargaPorAlumno
             heuristica = funcionHeuristica(estadoGenerado)
@@ -183,7 +189,6 @@ while len(listaAbierta)!=0 and not exito:
     nodoEncontrado=False
     for i in listaCerrada:
             nodoEncontrado=compararEstados(i[1],nodoAExpandir[1])
-
             if nodoEncontrado:
                 break
 
@@ -232,7 +237,6 @@ if(exito):
             if compararEstados(estadoPadreAux,i[1]):
                 estadoAux=estadoPadreAux
                 estadoPadreAux=i[0]
-                break
     recorrido.append(estadoAux)
 
     for i in recorrido:
