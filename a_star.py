@@ -9,8 +9,8 @@ arguments = reader("input.txt")
 def compararEstados(estado1,estado2): #devuelve True si son iguales
     pBus1=estado1[0]
     pBus2=estado2[0]
-    listAlumSub1=estado1[1].copy()
-    listAlumSub2=estado2[1].copy()
+    listAlumSub1=estado1[1]
+    listAlumSub2=estado2[1]
     listAlumPend1=estado1[2]
     listAlumPend2=estado2[2]
     if(pBus1!=pBus2):
