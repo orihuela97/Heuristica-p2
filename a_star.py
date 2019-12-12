@@ -81,6 +81,17 @@ def divideVencerasOrdenar(sucesores):
             i+=1
             k+=1
 
+def getCosteMinimoMovimiento(matrizCostes):
+    if(len(matrizCostes)>0):
+        if(len(matrizCostes[0])>0):
+            costeMinimo=matrizCostes[0][0]
+            for i in matrizCostes:
+                for j in i:
+                    if (j<costeMinimo and j!=-1) or (costeMinimo==-1):
+                        costeMinimo=j
+            return costeMinimo
+    return 0
+
 
 
 #Configuracion
@@ -89,15 +100,37 @@ capacidadBus=arguments[0].get("capacidad")
 listaColegios=arguments[1]
 costeCargaPorAlumno=1
 costeDescargaPorAlumno=1
-
+costeMinimoMovimiento=getCosteMinimoMovimiento(matrizCostes)
+print(costeMinimoMovimiento)
 #nodo inicial
 estadoInicial = [arguments[0].get("parada"),[],cambiarColegiosPorParadas(listaColegios,arguments[2])] #posicionBus, listaAlumnosSubidos, listaAlumnosPendientes
 #nodo meta
 estadoFinal = [arguments[0].get("parada"),[],[]]
 
-#funcion heuristica
+#funciones heuristica
 def funcionHeuristica(estado):
+    return funcionHeuristica2(estado)
+
+def funcionHeuristica1(estado):
     return 0
+
+def funcionHeuristica2(estado):
+    valor=len(estado[1])*costeDescargaPorAlumno
+    valor+=len(estado[2])*costeCargaPorAlumno+len(estado[2])*costeDescargaPorAlumno
+    paradasColegiosAVisitar=[]
+    paradasAlumnosAVisitar=[]
+    for i in estado[1]:
+        if i[1]!=estado[0] and not (i[1] in paradasAlumnosAVisitar):
+            paradasAlumnosAVisitar.append(i[1])
+    for i in estado[2]:
+        if i[1]!=estado[0] and not (i[1] in paradasColegiosAVisitar):
+            paradasColegiosAVisitar.append(i[1])
+    for i in estado[1]:
+        if  not (i[0] in paradasColegiosAVisitar):
+            paradasColegiosAVisitar.append(i[0])
+
+    valor+=(len(paradasColegiosAVisitar)+len(paradasAlumnosAVisitar))*costeMinimoMovimiento
+    return valor
 
 
 #acciones
@@ -148,7 +181,7 @@ listaAbierta=[]
 listaCerrada=[]
 exito=False
 nodoInicial=[[],estadoInicial,0,funcionHeuristica(estadoInicial)]
-listaAbierta.append([[],estadoInicial,0,funcionHeuristica(estadoInicial)]) #estadoNodoPadre, estadoNodo, coste, funcionEvaluacion
+listaAbierta.append(nodoInicial) #estadoNodoPadre, estadoNodo, coste, funcionEvaluacion
 
 
 while len(listaAbierta)!=0 and not exito:
