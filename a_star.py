@@ -237,6 +237,6 @@ if(exito):
 
     for i in recorrido:
         print(i)
-
+    print(len(listaCerrada))
 else:
     print("Sin soluciones")
