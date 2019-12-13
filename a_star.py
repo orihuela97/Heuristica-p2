@@ -93,7 +93,7 @@ estadoFinal = [arguments[0].get("parada"),[],[]]
 
 #funciones heuristica
 def funcionHeuristica(estado):
-    return funcionHeuristica2(estado)
+    return funcionHeuristica1(estado)
 
 def funcionHeuristica1(estado):
     return 0
@@ -121,6 +121,8 @@ def funcionHeuristica2(estado):
 def operadores(nodo):
     sucesores=[]
     pBus=nodo[1][0]
+    auxListaAlumnosSubidos=nodo[1][1]
+    auxAlumnosPendientes=nodo[1][2]
 
     #desplazamiento
     filaCostes = matrizCostes[pBus-1]
@@ -134,36 +136,34 @@ def operadores(nodo):
             nodoGenerado=[nodo[1],estadoGenerado,coste,coste+heuristica]
             sucesores.append(nodoGenerado)
     #cargar
-    for i in range(len(listaAlumnosPendientes)):
-        if pBus==listaAlumnosPendientes[i][1]: # en 0 se encuntra la parda al colegio que va, y en 1 la parada del alumno
-            auxListaAlumnosSubidos=nodo[1][1].copy()
-            auxListaAlumnosPendientes=nodo[1][2].copy()
-            alumno=auxListaAlumnosPendientes.pop(i)
-            #insertar en orden en alumnosSubidosPara que luego sea menos complejo de comparar estados
-            if(len(auxListaAlumnosSubidos)==0):
-                auxListaAlumnosSubidos.append(alumno)
-            else:
-                for j in range(len(auxListaAlumnosSubidos)):
-                    if alumno[0]<=auxListaAlumnosSubidos[j][0]:
-                        if alumno[1]<=auxListaAlumnosSubidos[j][1]:
-                            auxListaAlumnosSubidos.insert(j,alumno)
-                            break
-            estadoGenerado=[pBus,auxListaAlumnosSubidos,auxListaAlumnosPendientes]
-            coste = nodo[2]+costeCargaPorAlumno
-            heuristica = funcionHeuristica(estadoGenerado)
-            nodoGenerado=[nodo[1],estadoGenerado,coste,coste+heuristica]
-            sucesores.append(nodoGenerado)
+    if len(auxListaAlumnosSubidos)<capacidadBus:
+        for i in range(len(auxAlumnosPendientes)):
+            if pBus==auxAlumnosPendientes[i][1]: # en 0 se encuntra la parda al colegio que va, y en 1 la parada del alumno
+                listaAlumnosSubidos=nodo[1][1].copy()
+                listaAlumnosPendientes=nodo[1][2].copy()
+                alumno=listaAlumnosPendientes.pop(i)
+                listaAlumnosSubidos.append(alumno)
+                estadoGenerado=[pBus,listaAlumnosSubidos,listaAlumnosPendientes]
+                coste=nodo[2]+costeCargaPorAlumno
+                heuristica = funcionHeuristica(estadoGenerado)
+                nodoGenerado=[nodo[1],estadoGenerado,coste,coste+heuristica]
+                sucesores.append(nodoGenerado)
+                break
+
+
 
     #descargar
-    for i in range(len(listaAlumnosSubidos)):
-        if pBus==listaAlumnosSubidos[i][0]: # en 0 se encuntra el id del colegio al que va, y en 1 la parada del alumno
-            auxListaAlumnosSubidos=nodo[1][1].copy()
-            auxListaAlumnosSubidos.pop(i)
-            estadoGenerado=[pBus,auxListaAlumnosSubidos,listaAlumnosPendientes]
-            coste = nodo[2]+costeDescargaPorAlumno
+    for i in range(len(auxListaAlumnosSubidos)):
+        if pBus==auxListaAlumnosSubidos[i][0]: # en 0 se encuntra el id del colegio al que va, y en 1 la parada del alumno
+            listaAlumnosSubidos=nodo[1][1].copy()
+            listaAlumnosPendientes=nodo[1][2].copy()
+            listaAlumnosSubidos.pop(i)
+            estadoGenerado=[pBus,listaAlumnosSubidos,listaAlumnosPendientes]
+            coste=nodo[2]+costeDescargaPorAlumno
             heuristica = funcionHeuristica(estadoGenerado)
             nodoGenerado=[nodo[1],estadoGenerado,coste,coste+heuristica]
             sucesores.append(nodoGenerado)
+            break
 
     return sucesores
 
@@ -224,7 +224,7 @@ while len(listaAbierta)!=0 and not exito:
 estadoAux=nodoAExpandir[1]
 estadoPadreAux=nodoAExpandir[0]
 recorrido=[]
-
+print(nodoAExpandir[2])
 if(exito):
     while not compararEstados(estadoAux,estadoPadreAux):
         recorrido.append(estadoAux)
