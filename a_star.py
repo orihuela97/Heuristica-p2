@@ -2,7 +2,7 @@ from parserDatos import *
 
 
 
-arguments = reader("input.txt")
+arguments = reader(sys.argv[1])
 
 
 
