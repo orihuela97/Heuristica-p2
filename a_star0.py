@@ -1,5 +1,5 @@
 from parserDatos import *
-import time
+
 
 
 arguments = reader(sys.argv[1])
@@ -77,10 +77,6 @@ def getCosteMinimoMovimiento(matrizCostes):
             return costeMinimo
     return 0
 
-def getStrColegio(paradaColegio):
-    for i in listaColegios:
-        if i[1]==paradaColegio:
-            return "C"+str(i[0])
 
 
 #Configuracion
@@ -184,8 +180,8 @@ def operadores(nodo):
     return sucesores
 
 
-tiempoComiezo = time.time()
 #algoritmo A estrella
+
 listaAbierta=[]
 listaCerrada=[]
 exito=False
@@ -241,8 +237,6 @@ estadoAux=nodoAExpandir[1]
 estadoPadreAux=nodoAExpandir[0]
 recorrido=[]
 if(exito):
-    tiempoFin = time.time()
-    #obtener el camino
     while not compararEstados(estadoAux,estadoPadreAux):
         recorrido.append(estadoAux)
         for i in listaCerrada:
@@ -252,80 +246,9 @@ if(exito):
                 break
     recorrido.append(estadoAux)
 
-    #print en un fichero
-    fileRecorrido = open("problema.prob.output", "w")
-    estadoAux=nodoAExpandir[1]
-    fileRecorrido.write("P"+str(recorrido[len(recorrido)-1][0]))
-    contador=len(recorrido)-2
-    contadorParadas=1
-    while contador>=0:
-        if(recorrido[contador][0]!=estadoAux[0]):
-            fileRecorrido.write(" --> P"+str(recorrido[contador][0]))
-            contadorParadas+=1
-        else:
-            if len(recorrido[contador][1])<len(estadoAux[1]):
-                auxListaSubidos1=recorrido[contador][1].copy()
-                auxListaSubidos2=estadoAux[1].copy()
-                listaBajan=[]
-                while(len(auxListaSubidos1)>0):
-                    alumno=auxListaSubidos1.pop()
-                    for i in range(len(auxListaSubidos2)):
-                        if alumno==auxListaSubidos2[i]:
-                            auxListaSubidos2.pop(i)
-                            break
-
-                for i in auxListaSubidos2:
-                    repetido=False
-                    for j in listaBajan:
-                        if i[0]==j[1]:
-                            repetido=True
-                            j[0]+=1
-                            break
-                    if not repetido:
-                        listaBajan.append([1,i[0]])
-                fileRecorrido.write(" (B: ")
-                for i in range(len(listaBajan)-1):
-                    fileRecorrido.write(str(listaBajan[i][0])+" "+getStrColegio(listaBajan[i][1])+",")
-                if len(listaBajan)>0:
-                    fileRecorrido.write(str(listaBajan[len(listaBajan)-1][0])+" "+getStrColegio(listaBajan[len(listaBajan)-1][1])+")")
-
-            if len(recorrido[contador][2])<len(estadoAux[2]):
-                auxListaPendientes1=recorrido[contador][2].copy()
-                auxListaPendientes2=estadoAux[2].copy()
-                listaSuben=[]
-                while(len(auxListaPendientes1)>0):
-                    alumno=auxListaPendientes1.pop()
-                    for i in range(len(auxListaPendientes2)):
-                        if alumno==auxListaPendientes2[i]:
-                            auxListaPendientes2.pop(i)
-                            break
-
-                for i in auxListaPendientes2:
-                    repetido=False
-                    for j in listaSuben:
-                        if i[0]==j[1]:
-                            repetido=True
-                            j[0]+=1
-                            break
-                    if not repetido:
-                        listaSuben.append([1,i[0]])
-                fileRecorrido.write(" (S: ")
-                for i in range(len(listaSuben)-1):
-                    fileRecorrido.write(str(listaSuben[i][0])+" "+getStrColegio(listaSuben[i][1])+",")
-                if len(listaSuben)>0:
-                    fileRecorrido.write(str(listaSuben[len(listaSuben)-1][0])+" "+getStrColegio(listaSuben[len(listaSuben)-1][1])+")")
-
-
-        estadoAux=recorrido[contador]
-        contador-=1
-
     #estadisticas
     fileStats = open("problema.prob.statistics", "w")
-    fileStats.write("Tiempo total: "+str(tiempoFin-tiempoComiezo)+" segundos\n")
-    fileStats.write("Coste total: "+str(nodoAExpandir[2])+"\n")
-    fileStats.write("Paradas visitadas: "+str(contadorParadas)+"\n")
-    fileStats.write("Nodos expandidos: "+str(len(listaCerrada)))
-    print("Exito, puedes encontrar la solución en problema.prob.output y las estadísticas en problema.prob.statistics")
+    fileStats.write("Tiempo total")
 
 else:
-    print("Sin solución")
+    print("Sin soluciones")
