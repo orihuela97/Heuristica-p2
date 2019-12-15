@@ -27,6 +27,8 @@ def out_file(solution):
 	archivo.write(frase)
 	frase = solution.get("Naturales") + "             " + solution.get("Sociales") + "             " + solution.get("Mates") +  "              " + solution.get("Lengua") + "              " + solution.get("Ingles")+ "              " + solution.get("Gimnasia") + "\n"
 	archivo.write(frase)
+	frase = "El numero de soluciones obtenidas es: " + str(len(solution)) + "\n"
+	archivo.write(frase)
 	archivo.close()
 
 

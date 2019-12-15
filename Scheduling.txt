@@ -1,0 +1,18 @@
+Solucion al problema 1 obtenida correctamente.
+
+La asignacion obtenida para cada hora de clase es:
+
+LUNES     MARTES     MIERCOLES     JUEVES
+----------------------------------------------------------------------
+Ingles          Mates             Mates             Gimnasia
+Naturales          Lengua             Lengua             Ingles
+Naturales          Sociales             Sociales
+----------------------------------------------------------------------
+Solucion al problema 2 obtenida correctamente.
+
+La asignacion de un profesor para cada asignatura es:
+
+NATURALES     SOCIALES     MATEMATICAS     LENGUA     INGLES     E.FISICA
+-------------------------------------------------------------------------
+Lucia             Lucia             Juan              Juan              Andrea              Andrea
+El numero de soluciones obtenidas es: 17
