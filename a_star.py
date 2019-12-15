@@ -97,12 +97,12 @@ estadoFinal = [arguments[0].get("parada"),[],[]]
 
 #funciones heuristica
 def funcionHeuristica(estado):
-    return funcionHeuristica2(estado)
+    return funcionHeuristica1(estado)
 
-def funcionHeuristica1(estado):
+def funcionHeuristicaDefault(estado):
     return 0
 
-def funcionHeuristica2(estado):
+def funcionHeuristica1(estado):
     valor=len(estado[1])*costeDescargaPorAlumno
     valor+=len(estado[2])*costeCargaPorAlumno+len(estado[2])*costeDescargaPorAlumno
     paradasColegiosAVisitar=[]
@@ -119,7 +119,10 @@ def funcionHeuristica2(estado):
 
     valor+=(len(paradasColegiosAVisitar)+len(paradasAlumnosAVisitar))*costeMinimoMovimiento
     return valor
-
+def funcionHeuristica2(estado):
+    valor=len(estado[1])*costeDescargaPorAlumno
+    valor+=len(estado[2])*costeCargaPorAlumno+len(estado[2])*costeDescargaPorAlumno
+    return valor
 
 #acciones
 def operadores(nodo):
@@ -131,25 +134,21 @@ def operadores(nodo):
     cargadoDescargado=False
     #cargar
     if len(listaAlumnosSubidos)<capacidadBus:
-        auxListaAlumnosSubidos=nodo[1][1].copy()
-        auxListaAlumnosPendientes=nodo[1][2].copy()
-        contador=0
-        auxCoste=nodo[2]
-        while contador<len(auxListaAlumnosPendientes) and len(auxListaAlumnosSubidos)<capacidadBus:
-            if pBus==auxListaAlumnosPendientes[contador][1]:
+        for i in range(len(listaAlumnosPendientes)):
+            if pBus==listaAlumnosPendientes[i][1]:
                 cargadoDescargado=True
-                alumno=auxListaAlumnosPendientes.pop(contador)
+                auxListaAlumnosSubidos=listaAlumnosSubidos.copy()
+                auxListaAlumnosPendientes=listaAlumnosPendientes.copy()
+                alumno=auxListaAlumnosPendientes.pop(i)
                 auxListaAlumnosSubidos.append(alumno)
-                auxCoste+=costeCargaPorAlumno
-            else:
-                contador+=1
-        if cargadoDescargado:
-            estadoGenerado=[pBus,auxListaAlumnosSubidos,auxListaAlumnosPendientes]
-            heuristica = funcionHeuristica(estadoGenerado)
-            nodoGenerado=[nodo[1],estadoGenerado,auxCoste,auxCoste+heuristica]
-            sucesores.append(nodoGenerado)
+                coste=nodo[2]+costeCargaPorAlumno
+                estadoGenerado=[pBus,auxListaAlumnosSubidos,auxListaAlumnosPendientes]
+                heuristica = funcionHeuristica(estadoGenerado)
+                nodoGenerado=[nodo[1],estadoGenerado,coste,coste+heuristica]
+                sucesores.append(nodoGenerado)
+                break
 
-    #descargar
+    #descargar, nota: lo hace de golpe, en ningún momento le va a interesar tener cargado un nino que podria haber dejado
     if not cargadoDescargado:
         auxListaAlumnosSubidos=nodo[1][1].copy()
         auxListaAlumnosPendientes=nodo[1][2].copy()
@@ -169,17 +168,17 @@ def operadores(nodo):
             sucesores.append(nodoGenerado)
 
     #desplazamiento
-    if not cargadoDescargado:
-        filaCostes = matrizCostes[pBus-1]
-        for i in range(len(filaCostes)):
-            if(filaCostes[i]!=-1):
-                listaAlumnosSubidos=nodo[1][1].copy()
-                listaAlumnosPendientes=nodo[1][2].copy()
-                estadoGenerado=[i+1,listaAlumnosSubidos,listaAlumnosPendientes]
-                coste = nodo[2]+filaCostes[i]
-                heuristica = funcionHeuristica(estadoGenerado)
-                nodoGenerado=[nodo[1],estadoGenerado,coste,coste+heuristica]
-                sucesores.append(nodoGenerado)
+
+    filaCostes = matrizCostes[pBus-1]
+    for i in range(len(filaCostes)):
+        if(filaCostes[i]!=-1):
+            listaAlumnosSubidos=nodo[1][1].copy()
+            listaAlumnosPendientes=nodo[1][2].copy()
+            estadoGenerado=[i+1,listaAlumnosSubidos,listaAlumnosPendientes]
+            coste = nodo[2]+filaCostes[i]
+            heuristica = funcionHeuristica(estadoGenerado)
+            nodoGenerado=[nodo[1],estadoGenerado,coste,coste+heuristica]
+            sucesores.append(nodoGenerado)
 
     return sucesores
 
