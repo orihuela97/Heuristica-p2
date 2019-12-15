@@ -3,7 +3,7 @@ import time
 
 
 arguments = reader(sys.argv[1])
-
+nombreHeuristica=sys.argv[2]
 
 
 def compararEstados(estado1,estado2): #devuelve True si son iguales
@@ -97,12 +97,26 @@ estadoFinal = [arguments[0].get("parada"),[],[]]
 
 #funciones heuristica
 def funcionHeuristica(estado):
-    return funcionHeuristica1(estado)
+    if nombreHeuristica!="heuristicaDefault" and nombreHeuristica!="heuristica1" and nombreHeuristica!="heuristica2":
+        print("Nombre de heuristica mal introducido")
+        print("Opciones: heuristicaDefault heuristica1 heuristica2")
+        sys.exit()
+    if nombreHeuristica=="heuristicaDefault":
+        return funcionHeuristicaDefault(estado)
+    if nombreHeuristica=="heuristica1":
+        return funcionHeuristica1(estado)
+    if nombreHeuristica=="heuristica2":
+        return funcionHeuristica2(estado)
 
 def funcionHeuristicaDefault(estado):
     return 0
 
 def funcionHeuristica1(estado):
+    valor=len(estado[1])*costeDescargaPorAlumno
+    valor+=len(estado[2])*costeCargaPorAlumno+len(estado[2])*costeDescargaPorAlumno
+    return valor
+    
+def funcionHeuristica2(estado):
     valor=len(estado[1])*costeDescargaPorAlumno
     valor+=len(estado[2])*costeCargaPorAlumno+len(estado[2])*costeDescargaPorAlumno
     paradasColegiosAVisitar=[]
@@ -119,10 +133,8 @@ def funcionHeuristica1(estado):
 
     valor+=(len(paradasColegiosAVisitar)+len(paradasAlumnosAVisitar))*costeMinimoMovimiento
     return valor
-def funcionHeuristica2(estado):
-    valor=len(estado[1])*costeDescargaPorAlumno
-    valor+=len(estado[2])*costeCargaPorAlumno+len(estado[2])*costeDescargaPorAlumno
-    return valor
+
+
 
 #acciones
 def operadores(nodo):
