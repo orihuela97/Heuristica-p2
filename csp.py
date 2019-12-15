@@ -1,6 +1,6 @@
 from constraint import *
 
-def out_file(solution):
+def out_file(solution,numeroSoluciones):
 	archivo = open("Scheduling.txt", "w")
 	frase = "Solucion al problema 1 obtenida correctamente.\n"
 	archivo.write(frase)
@@ -27,7 +27,7 @@ def out_file(solution):
 	archivo.write(frase)
 	frase = solution.get("Naturales") + "             " + solution.get("Sociales") + "             " + solution.get("Mates") +  "              " + solution.get("Lengua") + "              " + solution.get("Ingles")+ "              " + solution.get("Gimnasia") + "\n"
 	archivo.write(frase)
-	frase = "El numero de soluciones obtenidas es: " + str(len(solution)) + "\n"
+	frase = "El numero de soluciones obtenidas es: " + str(numeroSoluciones) + "\n"
 	archivo.write(frase)
 	archivo.close()
 
@@ -106,6 +106,6 @@ problem.addConstraint(juan_Lun_Jue_PrimeraNaturales, ('Naturales', 'L1', 'J1'))
 problem.addConstraint(juan_Lun_Jue_PrimeraSociales, ('Sociales', 'L1', 'J1'))
 
 #Solucion
-solution = problem.getSolution()
+solution = problem.getSolutions()
 #------------------------------------------------SALIDA A UN ARCHIVO DE TEXTO--------------------------------
-out_file(solution)
+out_file(solution[0], len(solution))
