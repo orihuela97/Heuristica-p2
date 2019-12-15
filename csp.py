@@ -1,7 +1,7 @@
 from constraint import *
 
 def out_file(solution):
-	archivo = open("output.txt", "w")
+	archivo = open("Scheduling.txt", "w")
 	frase = "Solucion al problema 1 obtenida correctamente.\n"
 	archivo.write(frase)
 	frase = "\nLa asignacion obtenida para cada hora de clase es:\n"
