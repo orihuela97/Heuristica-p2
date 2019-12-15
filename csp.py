@@ -112,5 +112,6 @@ problem.addConstraint(juan_Lun_Jue_PrimeraSociales, ('Sociales', 'L1', 'J1'))
 solution = problem.getSolutions()
 tiempoFin = time.time()
 tiempoEjecucion = tiempoFin - tiempoComiezo
+print("Exito, consulta los datos y una solucion en el fichero Scheduling.txt")
 #------------------------------------------------SALIDA A UN ARCHIVO DE TEXTO--------------------------------
 out_file(solution[0], len(solution), tiempoEjecucion)
