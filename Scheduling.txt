@@ -12,8 +12,8 @@ Solucion al problema 2 obtenida correctamente.
 
 La asignacion de un profesor para cada asignatura es:
 
-NATURALES     SOCIALES     MATEMATICAS     LENGUA     INGLES     E.FISICA
+NATURALES     SOCIALES     MATEMATICAS     LENGUA     INGLES     GIMNASIA
 -------------------------------------------------------------------------
 Lucia             Lucia             Juan              Juan              Andrea              Andrea
 El numero de soluciones obtenidas es: 46872
-El tiempo de ejecucion es : 62.8948299885 Segundos 
+El tiempo de ejecucion es : 62.7625360489 Segundos 

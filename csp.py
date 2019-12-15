@@ -3,7 +3,7 @@ import time
 
 def out_file(solution,numeroSoluciones, tiempo):
 	archivo = open("Scheduling.txt", "w")
-	frase = "Solucion al problema 1 obtenida correctamente.\n"
+	frase = "Solucion al subproblema 1 obtenida correctamente.\n"
 	archivo.write(frase)
 	frase = "\nLa asignacion obtenida para cada hora de clase es:\n"
 	archivo.write(frase)
@@ -20,7 +20,7 @@ def out_file(solution,numeroSoluciones, tiempo):
 
 	frase = "----------------------------------------------------------------------\n"
 	archivo.write(frase)
-	frase = "Solucion al problema 2 obtenida correctamente.\n\nLa asignacion de un profesor para cada asignatura es:\n"
+	frase = "Solucion al subproblema 2 obtenida correctamente.\n\nLa asignacion de un profesor para cada asignatura es:\n"
 	archivo.write(frase)
 	frase = "\nNATURALES     SOCIALES     MATEMATICAS     LENGUA     INGLES     GIMNASIA\n"
 	archivo.write(frase)
