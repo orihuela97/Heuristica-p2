@@ -15,4 +15,5 @@ La asignacion de un profesor para cada asignatura es:
 NATURALES     SOCIALES     MATEMATICAS     LENGUA     INGLES     E.FISICA
 -------------------------------------------------------------------------
 Lucia             Lucia             Juan              Juan              Andrea              Andrea
-El numero de soluciones obtenidas es: 17
+El numero de soluciones obtenidas es: 46872
+El tiempo de ejecucion es : 62.8948299885 Segundos 

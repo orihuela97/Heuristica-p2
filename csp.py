@@ -1,6 +1,7 @@
 from constraint import *
+import time
 
-def out_file(solution,numeroSoluciones):
+def out_file(solution,numeroSoluciones, tiempo):
 	archivo = open("Scheduling.txt", "w")
 	frase = "Solucion al problema 1 obtenida correctamente.\n"
 	archivo.write(frase)
@@ -21,13 +22,15 @@ def out_file(solution,numeroSoluciones):
 	archivo.write(frase)
 	frase = "Solucion al problema 2 obtenida correctamente.\n\nLa asignacion de un profesor para cada asignatura es:\n"
 	archivo.write(frase)
-	frase = "\nNATURALES     SOCIALES     MATEMATICAS     LENGUA     INGLES     E.FISICA\n"
+	frase = "\nNATURALES     SOCIALES     MATEMATICAS     LENGUA     INGLES     GIMNASIA\n"
 	archivo.write(frase)
 	frase = "-------------------------------------------------------------------------\n"
 	archivo.write(frase)
 	frase = solution.get("Naturales") + "             " + solution.get("Sociales") + "             " + solution.get("Mates") +  "              " + solution.get("Lengua") + "              " + solution.get("Ingles")+ "              " + solution.get("Gimnasia") + "\n"
 	archivo.write(frase)
 	frase = "El numero de soluciones obtenidas es: " + str(numeroSoluciones) + "\n"
+	archivo.write(frase)
+	frase = "El tiempo de ejecucion es : " + str(tiempoEjecucion) + " Segundos "+"\n"
 	archivo.write(frase)
 	archivo.close()
 
@@ -82,7 +85,7 @@ def juan_Lun_Jue_PrimeraSociales(*args):
 	if args[0] == 'Juan' and (args[1]=='Sociales' or args[2]=='Sociales'):
 		return False
 	return True
-
+tiempoComiezo = time.time()
 problem = Problem()
 # Variables para el primer problema y cubro la restriccion mates solo a primera y sociales solo a segunda con el dominio
 problem.addVariables(["L1","M1","X1","J1"], ['Naturales','Lengua','Mates','Ingles','Gimnasia'])
@@ -107,5 +110,7 @@ problem.addConstraint(juan_Lun_Jue_PrimeraSociales, ('Sociales', 'L1', 'J1'))
 
 #Solucion
 solution = problem.getSolutions()
+tiempoFin = time.time()
+tiempoEjecucion = tiempoFin - tiempoComiezo
 #------------------------------------------------SALIDA A UN ARCHIVO DE TEXTO--------------------------------
-out_file(solution[0], len(solution))
+out_file(solution[0], len(solution), tiempoEjecucion)
